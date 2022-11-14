@@ -1,0 +1,49 @@
+html{
+  background-color: #393E46;
+  font-family: 'Roboto', sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.login-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.formContainer{
+  width: 500px;
+  height: 500px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #F7F7F7;
+  border-radius: 7px;
+}
+
+.formContainer #inputCreatePost {
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #B2B2B2;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.dataGrid-container{
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeader:focus, .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus {
+  outline: solid #1976d2 0px !important;
+}
+
