@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
 //sweet alert
 
 function Cita() {
 
     const [listaCitas, setListaCitas] = useState([]);
-    
+    let navigate = useNavigate();
 
     useEffect(() =>{
         axios.get("http://localhost:3001/citas").then((response) => {
@@ -75,10 +76,21 @@ function Cita() {
     return (
         <>
             <nav>
-            
+                <a href="/misCitas">Mis Citas</a>
             </nav>
-            <div style={{ height: 300, width: '55%' }} class = "dataGrid-container">
-                <DataGrid rows={rows} columns={columns} isRowSelectable={(params) => false}/>        
+            <div style={{ height: 500, width: '55%' }} class = "dataGrid-container">
+                <DataGrid 
+                     sx={{
+                        backgroundColor: '#D0B8A8',
+                        display: 'flex',
+                        margin: '0 auto',
+                        justifyContent: 'center',
+                        textAlign: 'center',
+                    }} 
+                    rows={rows} 
+                    columns={columns} 
+                    rowsPerPageOptions={[10]}
+                    isRowSelectable={(params) => false}/>        
             </div> 
         </>
     )

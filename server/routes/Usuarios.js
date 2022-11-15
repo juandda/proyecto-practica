@@ -75,19 +75,24 @@ router.post("/", async(req, res)=>{
 
 router.post("/login", async (req, res) =>{
     const { correo, password} = req.body
-    const usuario = await Usuarios.findOne({where: {correo:correo}})
 
-    if(!usuario) res.json({error: "El usuario no existe"});
+    try{
+        const usuario = await Usuarios.findOne({where: {correo:correo}})
 
-    bcrypt.compare(password, usuario.password).then((match)=>{
-        if(!match) res.json({error: "Contraseña y usuario incorrectos"})
+        if(!usuario) res.json({error: "El usuario no existe"});
 
-        const accessToken = sign({correo: usuario.correo, id:usuario.id }, "importantsecret")
-        res.json({
-            accessToken: accessToken,
-            usuarioId: usuario.id
-        });
-    })
+        bcrypt.compare(password, usuario.password).then((match)=>{
+            if(!match) res.json({error: "Contraseña y usuario incorrectos"})
+
+            const accessToken = sign({correo: usuario.correo, id:usuario.id }, "importantsecret")
+            res.json({
+                accessToken: accessToken,
+                usuarioId: usuario.id
+            });
+        })
+    } catch(err){
+        console.log(err)
+    }
 });
 
 

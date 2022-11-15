@@ -3,9 +3,10 @@ import { Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import '../App.css'
-import { Button } from '@mui/material';
+import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate }  from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 function Register() {
 
@@ -25,8 +26,31 @@ function Register() {
 
     let navigate = useNavigate();
 
+    const [listaEps, setListaEps] = useState([]);
+
+    const [eps, setEps] = useState('');
+
+    useEffect(() =>{
+        axios.get("http://localhost:3001/eps").then((response) => {
+            setListaEps(response.data);
+            console.log(response.data);
+        });
+    },[]);
+
+    const handleChange = (event) => {
+        setEps(event.target.value);
+    }
+
     const onSubmit= (data) =>{
-        axios.post("http://localhost:3001/usuarios", data).then(() =>{          
+        axios.post("http://localhost:3001/usuarios", 
+            {
+                nombre:data.nombre,
+                correo:data.correo,
+                fecha_nacimiento: data.fecha_nacimiento,
+                password:data.clave,
+                epsId:eps, 
+            }).then((response) =>{   
+            console.log(response);
         })
         navigate("/login")
     }
@@ -77,14 +101,20 @@ function Register() {
                         placeholder="Clave"
                         label = "Clave"
                     />
-                    <ErrorMessage name="epsId" component="span" />
-                    <Field
-                        autocomplete="off"
-                        id="inputCreatePost"
-                        name="epsId"
-                        placeholder="epsId"
-                        label = "epsId"
-                    />
+                    <InputLabel id="eps-id">Eps</InputLabel>
+                    <Select
+                        labelId="eps-id"
+                        id="select-eps"
+                        value={eps}
+                        onChange={handleChange}
+                        sx = {{width:200}}
+                    >
+                        {listaEps.map((eps) => {
+                            return(
+                                <MenuItem key={eps.id} value={eps.id}>{eps.nombre}</MenuItem>
+                            );
+                        })}
+                    </Select>
                     <Button 
                         sx={{backgroundColor: 'white',
                             marginTop: '30px',

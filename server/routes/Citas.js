@@ -83,6 +83,54 @@ router.put("/:id",async (req, res) => {
 
 });
 
+router.get("/:usuarioId", async (req, res) =>{
+    const { usuarioId } = req.params;
+    const listaCitas = await Citas.findAll({
+        where: {
+            usuarioId: usuarioId,
+        },
+        include: [{
+            model: db.Usuarios,
+            as:"usuario"
+        },
+        {
+            model: db.Medicos,
+            as: "medico",
+            attributes:{
+                exclude:['createdAt', 'updatedAt']
+            },
+            include: [{
+                attributes:{
+                    exclude:['createdAt', 'updatedAt']
+                },
+                model: db.Especialidades,
+                as: 'especialidad'
+            },
+            {
+                attributes:{
+                    exclude:['createdAt', 'updatedAt']
+                },
+                model: db.Eps,
+                as: 'eps'
+            }]
+        }],
+        attributes : {
+            include:
+                [
+                    sequelize.fn
+                    (
+                      "DATE_FORMAT", 
+                      sequelize.col("fecha"), 
+                      "%d-%m-%Y"
+                    ),
+                    "fecha",
+                ],
+            exclude:['createdAt', 'updatedAt']
+        }
+    }); 
+    res.json(listaCitas);
+})
+
 
 
 router.post("/", async(req, res)=>{
