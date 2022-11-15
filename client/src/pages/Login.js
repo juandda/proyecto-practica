@@ -54,13 +54,13 @@ function Login() {
                         setPassword(event.target.value)
                     }}
                 />
-
                 <Button 
                     sx={{backgroundColor: 'white',
                          marginTop: '30px',
                         color: '#393E46'}}
                     onClick={login}>Ingresar
                 </Button>
+                <a href="/register">Crear una cuenta</a>
             </div>
         </Box>
   )

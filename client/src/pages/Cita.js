@@ -72,9 +72,14 @@ function Cita() {
 
 
     return (
-        <div style={{ height: 300, width: '55%' }} class = "dataGrid-container">
-            <DataGrid rows={rows} columns={columns} isRowSelectable={(params) => false} isCellEditable={(params)=>false}/>        
-        </div> 
+        <>
+            <nav>
+            
+            </nav>
+            <div style={{ height: 300, width: '55%' }} class = "dataGrid-container">
+                <DataGrid rows={rows} columns={columns} isRowSelectable={(params) => false} isCellEditable={(params)=>false}/>        
+            </div> 
+        </>
     )
 }
 
