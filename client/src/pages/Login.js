@@ -3,11 +3,14 @@ import axios from 'axios';
 import { Button, Box, TextField } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import '../App.css'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     
     const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
+    let navigate = useNavigate();
+
     const login = () => {
         const data = {correo: correo, password: password}
         axios.post("http://localhost:3001/usuarios/login", data).then((response) => {
@@ -16,6 +19,7 @@ function Login() {
             }else{
                 sessionStorage.setItem("accessToken", response.data.accessToken)
                 sessionStorage.setItem("id", response.data.usuarioId)
+                navigate("/nuevaCita")
             }
         })
     }

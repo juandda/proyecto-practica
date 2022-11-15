@@ -19,7 +19,8 @@ function Cita() {
 
     const reserve =  (id) => {
         const data = {usuarioId: sessionStorage.getItem('id'),
-                      estado: false};
+                      estado: false,
+                    };
         axios.put(`http://localhost:3001/citas/${id}`, data).then((response) => {
             alert(response.data);
             window.location.reload()
@@ -77,7 +78,7 @@ function Cita() {
             
             </nav>
             <div style={{ height: 300, width: '55%' }} class = "dataGrid-container">
-                <DataGrid rows={rows} columns={columns} isRowSelectable={(params) => false} isCellEditable={(params)=>false}/>        
+                <DataGrid rows={rows} columns={columns} isRowSelectable={(params) => false}/>        
             </div> 
         </>
     )

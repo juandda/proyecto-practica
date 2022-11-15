@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../App.css'
 import { Button } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate }  from 'react-router-dom'
 
 function Register() {
 
@@ -22,10 +23,12 @@ function Register() {
         clave:Yup.string().required(),
     })
 
+    let navigate = useNavigate();
+
     const onSubmit= (data) =>{
-        axios.post("http://localhost:3001/usuarios", data).then(() =>{
-            
+        axios.post("http://localhost:3001/usuarios", data).then(() =>{          
         })
+        navigate("/login")
     }
 
     return (
@@ -58,6 +61,7 @@ function Register() {
                     <ErrorMessage name="fecha_nacimiento" component="span" />
                     <Field
                         autocomplete="off"
+                        type="date"
                         id="inputCreatePost"
                         name="fecha_nacimiento"
                         placeholder="Fecha Nacimiento"
@@ -72,6 +76,14 @@ function Register() {
                         name="clave"
                         placeholder="Clave"
                         label = "Clave"
+                    />
+                    <ErrorMessage name="epsId" component="span" />
+                    <Field
+                        autocomplete="off"
+                        id="inputCreatePost"
+                        name="epsId"
+                        placeholder="epsId"
+                        label = "epsId"
                     />
                     <Button 
                         sx={{backgroundColor: 'white',
