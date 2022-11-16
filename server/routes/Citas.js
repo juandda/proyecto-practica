@@ -64,10 +64,14 @@ router.delete("/:citasId", async (req, res) => {
     res.json("Eliminacion exitosa");
 })
 
-router.put("/:id",async (req, res) => {
+router.put("/:id", validateToken ,async (req, res) => {
     try{
         const { id } = req.params;
-        const {direccion, fecha, hora, estado, medicoId, usuarioId} = req.body;
+        const {direccion, fecha, hora, estado, medicoId} = req.body;
+        let usuarioId = req.usuario.id
+        if(estado){
+            usuarioId = null
+        }
         await db.Citas.update(
             {direccion, fecha, hora, estado, medicoId, usuarioId},
             {
@@ -83,8 +87,8 @@ router.put("/:id",async (req, res) => {
 
 });
 
-router.get("/:usuarioId", async (req, res) =>{
-    const { usuarioId } = req.params;
+router.get("/misCitas", validateToken, async (req, res) =>{
+    const usuarioId = req.usuario.id
     const listaCitas = await Citas.findAll({
         where: {
             usuarioId: usuarioId,

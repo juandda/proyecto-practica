@@ -10,17 +10,23 @@ const MisCitas = () => {
     
 
   useEffect(() =>{
-    axios.get(`http://localhost:3001/citas/${sessionStorage.getItem('id')}`).then((response) => {
+    axios.get("http://localhost:3001/citas/misCitas", {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
         setListaCitas(response.data);
         console.log(response.data);
     });
   },[]);
 
   const cancelar =  (id) => {
-    const data = {usuarioId: null,
-                  estado: true,
-                };
-    axios.put(`http://localhost:3001/citas/${id}`, data).then((response) => {
+    const data = { estado: true};
+    axios.put(`http://localhost:3001/citas/${id}`, data, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      }
+    }).then((response) => {
         alert(response.data);
         window.location.reload()
     });

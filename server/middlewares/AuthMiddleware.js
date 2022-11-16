@@ -1,3 +1,5 @@
+const { verify } = require("jsonwebtoken");
+
 const validateToken = (req, res, next) => {
 
     const accessToken = req.header("accessToken");
@@ -6,6 +8,7 @@ const validateToken = (req, res, next) => {
 
     try{
         const validToken = verify(accessToken, "importantsecret");
+        req.usuario = validToken;
         if(validToken){
             return next()
         }

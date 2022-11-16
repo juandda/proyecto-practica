@@ -84,7 +84,7 @@ router.post("/login", async (req, res) =>{
         bcrypt.compare(password, usuario.password).then((match)=>{
             if(!match) res.json({error: "Contraseña y usuario incorrectos"})
 
-            const accessToken = sign({correo: usuario.correo, id:usuario.id }, "importantsecret")
+            const accessToken = sign({correo: usuario.correo, id:usuario.id, nombre:usuario.nombre }, "importantsecret")
             res.json({
                 accessToken: accessToken,
                 usuarioId: usuario.id

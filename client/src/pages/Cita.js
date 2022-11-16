@@ -19,14 +19,21 @@ function Cita() {
     },[]);
 
     const reserve =  (id) => {
-        const data = {usuarioId: sessionStorage.getItem('id'),
-                      estado: false,
-                    };
-        axios.put(`http://localhost:3001/citas/${id}`, data).then((response) => {
+        const data = { estado: false};
+        axios.put(`http://localhost:3001/citas/${id}`, data,   {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }).then((response) => {
             alert(response.data);
             window.location.reload()
         });
     }
+
+    const logout = () => {
+        localStorage.removeItem("accessToken");
+        navigate("/login");
+    };
     
     const columns = [
         {field: 'direccion', headerName: 'Direccion', width: 150},
@@ -77,6 +84,12 @@ function Cita() {
         <>
             <nav>
                 <a href="/misCitas">Mis Citas</a>
+                <Button
+                        disabled={false}
+                        onClick={logout}
+                        >
+                            Cerrar sesion
+                        </Button>
             </nav>
             <div style={{ height: 500, width: '55%' }} class = "dataGrid-container">
                 <DataGrid 
