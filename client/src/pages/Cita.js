@@ -10,6 +10,7 @@ function Cita() {
 
     const [listaCitas, setListaCitas] = useState([]);
     let navigate = useNavigate();
+    const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(() =>{
         axios.get("http://localhost:3001/citas").then((response) => {
@@ -82,6 +83,7 @@ function Cita() {
 
     return (
         <>
+        
             <nav>
                 <a href="/misCitas">Mis Citas</a>
                 <Button
