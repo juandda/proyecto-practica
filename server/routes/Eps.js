@@ -5,7 +5,7 @@ const { Eps } = require ("../models")
 const { validateToken } = require("../middlewares/AuthMiddleware")
 
 
-router.get("/",validateToken, async(req, res)=>{
+router.get("/", async(req, res)=>{
     const listaEps = await Eps.findAll();
     res.json(listaEps);
 });
