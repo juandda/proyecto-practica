@@ -31,12 +31,11 @@ const MisCitas = () => {
     }).then((response) => {
           Swal.fire({
             icon: 'success',
-            title: response.data,
-            timer: 4000
+            title: response.data
         })
         setTimeout(function(){
           window.location.reload();
-        }, 4000)
+        }, 2000)
     });
 }
 
