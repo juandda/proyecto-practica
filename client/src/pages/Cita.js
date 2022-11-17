@@ -5,15 +5,19 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 //sweet alert
 
 function Cita() {
 
     const [listaCitas, setListaCitas] = useState([]);
-    let navigate = useNavigate();
 
     useEffect(() =>{
-        axios.get("http://localhost:3001/citas").then((response) => {
+        axios.get("http://localhost:3001/citas",{
+            headers: {
+                accessToken: localStorage.getItem("accessToken"),
+              },
+        }).then((response) => {
             setListaCitas(response.data);
             console.log(response.data);
         });
@@ -29,9 +33,11 @@ function Cita() {
             Swal.fire({
                 icon: 'success',
                 title: response.data,
-                timer: 2000
+                timer: 4000
             })
-            window.location.reload()
+            setTimeout(function(){
+                window.location.reload();
+            }, 4000)
         });
     }
 
@@ -83,16 +89,7 @@ function Cita() {
 
     return (
         <>
-        
-            {/* <nav>
-                <a href="/misCitas">Mis Citas</a>
-                <Button
-                        disabled={false}
-                        onClick={logout}
-                        >
-                            Cerrar sesion
-                        </Button>
-            </nav> */}
+            <NavBar/>    
             <div style={{ height: 500, width: '55%' }} class = "dataGrid-container">
                 <DataGrid 
                      sx={{

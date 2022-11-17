@@ -4,6 +4,7 @@ import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 
 const MisCitas = () => {
 
@@ -31,9 +32,11 @@ const MisCitas = () => {
           Swal.fire({
             icon: 'success',
             title: response.data,
-            timer: 2000
+            timer: 4000
         })
-        window.location.reload()
+        setTimeout(function(){
+          window.location.reload();
+        }, 4000)
     });
 }
 
@@ -75,7 +78,8 @@ const MisCitas = () => {
 })
 
   return (
-
+    <>
+        <NavBar/>
         <div style={{ height: 300, width: '65%'}} className='table-container'>
                 <DataGrid 
                     sx={{
@@ -90,6 +94,7 @@ const MisCitas = () => {
                     columns={columns} 
                     isRowSelectable={() => false}/>        
         </div> 
+    </>
   )
 }
 

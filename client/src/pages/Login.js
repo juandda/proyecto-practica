@@ -4,13 +4,11 @@ import { Button, Box, TextField } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import '../App.css'
 import { useNavigate } from 'react-router-dom';
- import { AuthContext } from '../helpers/AuthContext';
 
 function Login() {
     
     const [correo, setCorreo] = useState("")
     const [password, setPassword] = useState("")
-    const {setAuthState} = useContext(AuthContext)
     let navigate = useNavigate();
 
     const login = () => {
@@ -20,7 +18,6 @@ function Login() {
                 alert(response.data.error)
             }else{
                 localStorage.setItem("accessToken", response.data.accessToken)
-                setAuthState(true)
                 navigate("/nuevaCita")
             }
         })

@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../models');
 const router = express.Router();
 const { Eps } = require ("../models")
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 
 router.get("/", async(req, res)=>{
@@ -9,7 +10,7 @@ router.get("/", async(req, res)=>{
     res.json(listaEps);
 });
 
-router.delete("/:epsId", async (req, res) => {
+router.delete("/:epsId",validateToken, async (req, res) => {
     const epsId = req.params.epsId;
 
     await Eps.destroy({
@@ -21,7 +22,7 @@ router.delete("/:epsId", async (req, res) => {
     res.json("Eliminacion exitosa");
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",validateToken, async (req, res) => {
     try{
         const { id } = req.params;
         const {nombre, telefono} = req.body;
@@ -41,7 +42,7 @@ router.put("/:id", async (req, res) => {
 });
 
 
-router.post("/", async(req, res)=>{
+router.post("/",validateToken, async(req, res)=>{
     const eps = req.body;
     await Eps.create(eps);
     res.json(eps);

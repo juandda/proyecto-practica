@@ -8,6 +8,7 @@ import '../App.css';
 import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 //sweet alert
 
 function RegistrarCita() {
@@ -30,7 +31,11 @@ function RegistrarCita() {
     const [medico, setMedico] = useState('');
 
     useEffect(() =>{
-        axios.get("http://localhost:3001/medicos").then((response) => {
+        axios.get("http://localhost:3001/medicos", {
+            headers: {
+                accessToken: localStorage.getItem("accessToken"),
+              },
+        }).then((response) => {
             setListaMedicos(response.data);
         });
     },[]);
@@ -52,86 +57,81 @@ function RegistrarCita() {
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'la cita se ha registrado correctamente',
-                    timer: 2000
+                    title: 'la cita se ha registrado correctamente'
                 })
-                navigate("/listarCitas");
+                setTimeout(function(){
+                    navigate("/listarCitas");
+                  }, 2000)
         })
     }
 
 
 
     return (
-        <div className='form-container'>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-            >
-                <Form className="formContainer">
-                    <h2> Registro de citas</h2>
-                    <ErrorMessage name="direccion" component="span" />
-                    <Field
-                        autoComplete="off"
-                        id="inputCreatePost"
-                        name="direccion"
-                        placeholder="Direccion"
-                        label = "Direccion"
-                    />
+        <>
+            <NavBar/>
+            <div className='form-container'>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                >
+                    <Form className="formContainer">
+                        <h2> Registro de citas</h2>
+                        <ErrorMessage name="direccion" component="span" />
+                        <Field
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="direccion"
+                            placeholder="Direccion"
+                            label = "Direccion"
+                        />
 
-                    <ErrorMessage name="fecha" component="span" />
-                    <Field
-                        autoComplete="off"
-                        type="date"
-                        id="inputCreatePost"
-                        name="fecha"
-                        placeholder="Fecha"
-                        label = "Fecha"
-                    />
+                        <ErrorMessage name="fecha" component="span" />
+                        <Field
+                            autoComplete="off"
+                            type="date"
+                            id="inputCreatePost"
+                            name="fecha"
+                            placeholder="Fecha"
+                            label = "Fecha"
+                        />
 
-                    <ErrorMessage name="hora" component="span" />
-                    <Field
-                        type="time"
-                        id="inputCreatePost"
-                        name="hora"
-                        placeholder="hora"
-                        label = "hora"
-                    />
+                        <ErrorMessage name="hora" component="span" />
+                        <Field
+                            type="time"
+                            id="inputCreatePost"
+                            name="hora"
+                            placeholder="hora"
+                            label = "hora"
+                        />
+                        
+
+                        <InputLabel id="medico-id">Medico</InputLabel>
+                        <Select
+                            labelId="medico-id"
+                            id="select-medico"
+                            value={medico}
+                            onChange={handleChange}
+                            sx = {{width:200}}
+                        >
+                            {listaMedicos.map((medico) => {
+                                return(
+                                    <MenuItem key={medico.id} value={medico.id}>{medico.nombre}</MenuItem>
+                                );
+                            })}
+                        </Select>
+                        <Button 
+                            sx={{backgroundColor: 'white',
+                                marginTop: '30px',
+                                color: '#393E46'}}
+                            type = "submit"    
+                            onSubmit={onSubmit}>Registrar
+                        </Button>
+                    </Form>
+                </Formik>
+            </div>
+        </>
                     
-
-                    <InputLabel id="medico-id">Medico</InputLabel>
-                    <Select
-                        labelId="medico-id"
-                        id="select-medico"
-                        value={medico}
-                        onChange={handleChange}
-                        sx = {{width:200}}
-                    >
-                        {listaMedicos.map((medico) => {
-                            return(
-                                <MenuItem key={medico.id} value={medico.id}>{medico.nombre}</MenuItem>
-                            );
-                        })}
-                    </Select>
-                    <Button 
-                        sx={{
-                            marginTop: '30px',
-                            color: '#393E46'}}
-                        type = "submit"    
-                        variant="contained"
-                        onSubmit={onSubmit}>Registrar
-                    </Button>
-                    <Button 
-                        sx={{
-                            marginTop: '30px',
-                            color: '#393E46'}}
-                            color='secondary'
-                            variant="contained"
-                        type = "submit"    
-                        onClick={()=>{navigate("/listarCitas")}}>Volver
-                    </Button>
-                </Form>
-            </Formik>
-        </div>
     )
 }
 

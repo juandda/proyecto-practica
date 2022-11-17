@@ -7,7 +7,7 @@ const { validateToken } = require("../middlewares/AuthMiddleware")
 
 //Buscar citas 
 
-router.get("/", async(req, res)=>{
+router.get("/", validateToken, async(req, res)=>{
     const listaCitas = await Citas.findAll({
         include: [{
             model: db.Usuarios,
@@ -52,7 +52,7 @@ router.get("/", async(req, res)=>{
 });
 
 
-router.delete("/:citasId", async (req, res) => {
+router.delete("/:citasId", validateToken, async (req, res) => {
     const citasId = req.params.citasId;
 
     await Citas.destroy({
@@ -137,7 +137,7 @@ router.get("/misCitas", validateToken, async (req, res) =>{
 
 
 
-router.post("/", async(req, res)=>{
+router.post("/",validateToken,  async(req, res)=>{
     const citas = req.body;
     await Citas.create(citas);
     res.json(citas);

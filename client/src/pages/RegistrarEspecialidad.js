@@ -8,6 +8,7 @@ import '../App.css';
 import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 //sweet alert
 
 function RegistrarEspecialidad    () {
@@ -19,50 +20,58 @@ function RegistrarEspecialidad    () {
     const validationSchema = Yup.object().shape({
         nombre: Yup.string().required()
     })
-
+    let navigate = useNavigate();
 
     const onSubmit= (data) =>{
         axios.post("http://localhost:3001/especialidades", 
             {
                 nombre:data.nombre
+            },{
+                headers: {
+                    accessToken: localStorage.getItem("accessToken"),
+                  },
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'la especialidad se ha registrado correctamente',
-                    timer: 2000
+                    title: 'la especialidad se ha registrado correctamente'
                 })
-                window.location.reload();
+                setTimeout(function(){
+                    navigate("/listarEspecialidades");
+                  }, 3000)
         })
     }
 
     return (
-        <div className='form-container'>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={validationSchema}
-            >
-                <Form className="formContainer">
-                    <h2> Registro de Especialidad</h2>
-                    <ErrorMessage name="nombre" component="span" />
-                    <Field
-                        autoComplete="off"
-                        id="inputCreatePost"
-                        name="nombre"
-                        placeholder="Nombre"
-                        label = "Nombre"
-                    />
+        <>
+            <NavBar/>
+             <div className='form-container'>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                >
+                    <Form className="formContainer">
+                        <h2> Registro de Especialidad</h2>
+                        <ErrorMessage name="nombre" component="span" />
+                        <Field
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="nombre"
+                            placeholder="Nombre"
+                            label = "Nombre"
+                        />
 
-                    <Button 
-                        sx={{backgroundColor: 'white',
-                            marginTop: '30px',
-                            color: '#393E46'}}
-                        type = "submit"    
-                        onSubmit={onSubmit}>Registrar
-                    </Button>
-                </Form>
-            </Formik>
-        </div>
+                        <Button 
+                            sx={{backgroundColor: 'white',
+                                marginTop: '30px',
+                                color: '#393E46'}}
+                            type = "submit"    
+                            onSubmit={onSubmit}>Registrar
+                        </Button>
+                    </Form>
+                </Formik>
+            </div>
+        </>
     )
 }
 

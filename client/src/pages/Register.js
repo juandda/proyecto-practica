@@ -56,7 +56,9 @@ function Register() {
                     title: 'El usuario se ha registrado correctamente'
                 })
         })
-        navigate("/login")
+        setTimeout(function(){
+            navigate("/login");
+          }, 2000)
     }
 
     return (

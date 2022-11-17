@@ -3,11 +3,12 @@ const db = require('../models');
 const router = express.Router();
 const { Usuarios } = require ("../models")
 const bcrypt =  require('bcrypt');
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 const {  sign } = require('jsonwebtoken');
 
 
-router.get("/", async(req, res)=>{
+router.get("/",validateToken, async(req, res)=>{
     const listaUsuarios = await Usuarios.findAll({
         include:{
             model: db.Eps,
@@ -17,8 +18,8 @@ router.get("/", async(req, res)=>{
     res.json(listaUsuarios);
 });
 
-router.get("/byId/:id", async (req, res) => {
-    const id = req.params.id;
+router.get("/miUsuario",validateToken, async (req, res) => {
+    let id = req.usuario.id
     const usuario = await Usuarios.findOne({
         where: {
             id:id
@@ -27,7 +28,7 @@ router.get("/byId/:id", async (req, res) => {
     res.json(usuario);
 });
 
-router.delete("/:usuariosId", async (req, res) => {
+router.delete("/:usuariosId",validateToken, async (req, res) => {
     const usuariosId = req.params.usuariosId;
 
     await Usuarios.destroy({
@@ -39,12 +40,12 @@ router.delete("/:usuariosId", async (req, res) => {
     res.json("Eliminacion exitosa");
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",validateToken, async (req, res) => {
     try{
         const { id } = req.params;
-        const {nombre, correo, fecha_nacimiento, eps_id} = req.body;
+        const {nombre, correo, fecha_nacimiento, eps_id, rol} = req.body;
         await db.Usuarios.update(
-            {nombre, correo, fecha_nacimiento, eps_id},
+            {nombre, correo, fecha_nacimiento, eps_id, rol},
             {
                 where: {
                     id: id,
@@ -67,7 +68,8 @@ router.post("/", async(req, res)=>{
             correo: usuario.correo,
             fecha_nacimiento: usuario.fecha_nacimiento,
             epsId: usuario.epsId,
-            password: hash
+            password: hash,
+            rol:usuario.rol
         })
     })
     res.json(usuario);
@@ -84,10 +86,9 @@ router.post("/login", async (req, res) =>{
         bcrypt.compare(password, usuario.password).then((match)=>{
             if(!match) res.json({error: "Contraseña y usuario incorrectos"})
 
-            const accessToken = sign({correo: usuario.correo, id:usuario.id, nombre:usuario.nombre }, "importantsecret")
+            const accessToken = sign({correo: usuario.correo, id:usuario.id, nombre:usuario.nombre, rol:usuario.rol }, "importantsecret")
             res.json({
                 accessToken: accessToken,
-                usuarioId: usuario.id
             });
         })
     } catch(err){

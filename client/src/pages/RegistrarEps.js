@@ -8,6 +8,7 @@ import '../App.css';
 import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 //sweet alert
 
 function RegistrarEps    () {
@@ -29,17 +30,24 @@ function RegistrarEps    () {
             {
                 nombre:data.nombre,
                 telefono:data.telefono
+            },{
+                headers: {
+                    accessToken: localStorage.getItem("accessToken"),
+                  },
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'la eps se ha registrado correctamente',
-                    timer: 2000
+                    title: 'la eps se ha registrado correctamente'
                 })
-                navigate("/listarEps");
+                setTimeout(function(){
+                    navigate("/listarEps");
+                }, 2000)
         })
     }
 
     return (
+        <>
+        <NavBar/>
         <div className='form-container'>
             <Formik
                 initialValues={initialValues}
@@ -84,6 +92,7 @@ function RegistrarEps    () {
                 </Form>
             </Formik>
         </div>
+        </>
     )
 }
 

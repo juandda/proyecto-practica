@@ -4,6 +4,7 @@ import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 const ListarMedicos = () => {
 
@@ -41,7 +42,8 @@ const ListarMedicos = () => {
 })
 
   return (
-
+        <>
+        <NavBar/>
         <div style={{ height: 300, width: '47%', textAlign:'-webkit-center' ,marginTop:'100px', backgroundColor:'white'}} className='table-container'>
                  <Button
                   color="primary"
@@ -62,6 +64,7 @@ const ListarMedicos = () => {
                     columns={columns} 
                     isRowSelectable={() => false}/>        
         </div> 
+        </>
   )
 }
 
