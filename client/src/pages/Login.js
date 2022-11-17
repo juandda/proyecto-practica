@@ -26,49 +26,54 @@ function Login() {
         })
     }
     return (
-        <Box sx={{component: "form",
-                  width: 300, 
-                  height: 400, 
-                  margin: 'auto',
-                  marginTop: '60px',
-                  display: 'flex', 
-                  justifyContent:'center',
-                  alignItems: 'center',  
-                  direction: 'column',
-                  backgroundColor: '#F7F7F7',
-                  borderRadius:'7px',
-                  '& .MuiInputBase-root': { m: 1, height: '50px', width: '200px', backgroundColor: 'white' },
-                }}
-        >
-            
-            <div className='login-container'>
-                <PersonIcon sx={{ fontSize: 110, color: '#393E46'}}></PersonIcon>
-                <TextField
-                    sx={{marginBottom: 2}}    
-                    type="text"
-                    required
-                    label = "Correo"
-                    onChange={(event) => {
-                        setCorreo(event.target.value)
-                    }}
-                />
-                <TextField 
-                    type="password"
-                    required
-                    label = "Contraseña"
-                    onChange={(event) => {
-                        setPassword(event.target.value)
-                    }}
-                />
-                <Button 
-                    sx={{backgroundColor: 'white',
-                         marginTop: '30px',
-                        color: '#393E46'}}
-                    onClick={login}>Ingresar
-                </Button>
-                <a href="/register">Crear una cuenta</a>
+        <div className='login-full'>
+            <div className='promo-container'>
+                <h1>¡Bienvenido a Tramisalud!</h1>
+                <h2>¿Aún tardas mucho tiempo en solicitar citas médicas?</h2>
+                <p>No te preocupes más, nosotros te ayudamos. Te colaboramos en realizar el proceso de solicitudes médicas, así podrás ahorrar mucho más tiempo en trayectos y tiempo de espera en la entidad de salud. Servimos como intermediario de la eps a la que estás afiliado.</p>
             </div>
-        </Box>
+            <Box sx={{component: "form",
+                    width: 400, 
+                    height: 500, 
+                    marginTop: '50px',
+                    display: 'flex', 
+                    justifyContent:'center', 
+                    direction: 'column',
+                    backgroundColor: '#F7F7F7',
+                    borderRadius:'7px',
+                    '& .MuiInputBase-root': { m: 1, height: '50px', width: '250px', backgroundColor: 'white' },
+                    }}
+            >
+                
+                <div className='login-container'>
+                    <PersonIcon sx={{ fontSize: 110, color: '#393E46'}}></PersonIcon>
+                    <TextField
+                        sx={{marginBottom: 2}}    
+                        type="text"
+                        required
+                        label = "Correo"
+                        onChange={(event) => {
+                            setCorreo(event.target.value)
+                        }}
+                    />
+                    <TextField 
+                        type="password"
+                        required
+                        label = "Contraseña"
+                        onChange={(event) => {
+                            setPassword(event.target.value)
+                        }}
+                    />
+                    <Button 
+                        sx={{backgroundColor: 'white',
+                            marginTop: '30px',
+                            color: '#393E46'}}
+                        onClick={login}>Ingresar
+                    </Button>
+                    <a href="/register">Crear una cuenta</a>
+                </div>
+            </Box>
+        </div>
   )
 }
 

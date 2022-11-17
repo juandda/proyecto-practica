@@ -1,12 +1,49 @@
-html{
-  background-color: #EEEEEE;
+*{
   font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  overflow: hidden;
+  padding: 0px;
+}
+
+body{
+  background: linear-gradient(rgba(5,7,12,0.55), rgba(5,7,12,0.55)),
+              url("assets/fondo.jpg") no-repeat center center fixed;
+  background-color: rgba(57, 62, 70, 0.3);
+  background-size: cover;
+
 }
 
 .App {
   text-align: center;
 }
 
+.login-full{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.promo-container{
+  width: 50%;
+  height: 15%;
+}
+.promo-container h1{
+  color: #F7F7F7;
+  margin-bottom: 30px;
+}
+.promo-container h2{
+  color: #F7F7F7;
+  margin-bottom: 15px;
+}
+.promo-container p{
+  color: #F7F7F7;
+  text-align: justify;
+}
 .login-container{
   display: flex;
   justify-content: center;
@@ -55,4 +92,8 @@ html{
  .table-container{
   margin: 0 auto;
   margin-top: 20px;
+ }
+
+ a{
+  margin-top: 10px;
  }
