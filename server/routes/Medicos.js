@@ -2,8 +2,9 @@ const express = require('express');
 const db = require('../models');
 const router = express.Router();
 const { Medicos } = require ("../models")
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
-router.get("/", async(req, res)=>{
+router.get("/",validateToken, async(req, res)=>{
     const listaMedicos = await Medicos.findAll({
         include: [{
             model: db.Especialidades,
@@ -17,7 +18,7 @@ router.get("/", async(req, res)=>{
     res.json(listaMedicos);
 });
 
-router.delete("/:medicosId", async (req, res) => {
+router.delete("/:medicosId",validateToken, async (req, res) => {
     const medicosId = req.params.medicosId;
 
     await Medicos.destroy({
@@ -29,7 +30,7 @@ router.delete("/:medicosId", async (req, res) => {
     res.json("Eliminacion exitosa");
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",validateToken, async (req, res) => {
     try{
         const { id } = req.params;
         const {nombre, especialidad, epsId} = req.body;
@@ -48,7 +49,7 @@ router.put("/:id", async (req, res) => {
 
 });
 
-router.post("/", async(req, res)=>{
+router.post("/", validateToken, async(req, res)=>{
     const medicos = req.body;
     await Medicos.create(medicos);
     res.json(medicos);

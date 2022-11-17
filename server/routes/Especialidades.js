@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { Especialidades } = require ("../models")
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 
-router.get("/", async(req, res)=>{
+router.get("/",validateToken, async(req, res)=>{
     const listaEspecialidades = await Especialidades.findAll();
     res.json(listaEspecialidades);
 });
@@ -20,7 +21,7 @@ router.delete("/:especialidadesId", async (req, res) => {
     res.json("Eliminacion exitosa");
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",validateToken, async (req, res) => {
     try{
         const { id } = req.params;
         const {nombre} = req.body;
@@ -40,7 +41,7 @@ router.put("/:id", async (req, res) => {
 });
 
 
-router.post("/", async(req, res)=>{
+router.post("/",validateToken, async(req, res)=>{
     const especialidad = req.body;
     await Especialidades.create(especialidad);
     res.json(especialidad);

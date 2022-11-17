@@ -8,6 +8,7 @@ import '../App.css';
 import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2';
+import NavBar  from './NavBar';
 //sweet alert
 
 function RegistrarEspecialidad    () {
@@ -25,6 +26,10 @@ function RegistrarEspecialidad    () {
         axios.post("http://localhost:3001/especialidades", 
             {
                 nombre:data.nombre
+            },{
+                headers: {
+                    accessToken: localStorage.getItem("accessToken"),
+                  },
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
@@ -35,33 +40,36 @@ function RegistrarEspecialidad    () {
     }
 
     return (
-        <div className='form-container'>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={validationSchema}
-            >
-                <Form className="formContainer">
-                    <h2> Registro de Especialidad</h2>
-                    <ErrorMessage name="nombre" component="span" />
-                    <Field
-                        autoComplete="off"
-                        id="inputCreatePost"
-                        name="nombre"
-                        placeholder="Nombre"
-                        label = "Nombre"
-                    />
+        <>
+            <NavBar/>
+             <div className='form-container'>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                >
+                    <Form className="formContainer">
+                        <h2> Registro de Especialidad</h2>
+                        <ErrorMessage name="nombre" component="span" />
+                        <Field
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="nombre"
+                            placeholder="Nombre"
+                            label = "Nombre"
+                        />
 
-                    <Button 
-                        sx={{backgroundColor: 'white',
-                            marginTop: '30px',
-                            color: '#393E46'}}
-                        type = "submit"    
-                        onSubmit={onSubmit}>Registrar
-                    </Button>
-                </Form>
-            </Formik>
-        </div>
+                        <Button 
+                            sx={{backgroundColor: 'white',
+                                marginTop: '30px',
+                                color: '#393E46'}}
+                            type = "submit"    
+                            onSubmit={onSubmit}>Registrar
+                        </Button>
+                    </Form>
+                </Formik>
+            </div>
+        </>
     )
 }
 

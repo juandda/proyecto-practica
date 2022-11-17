@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
+import NavBar  from './NavBar';
 
 const MisCitas = () => {
 
@@ -70,7 +71,8 @@ const MisCitas = () => {
 })
 
   return (
-
+    <>
+        <NavBar/>
         <div style={{ height: 300, width: '56%'}} className='table-container'>
                 <DataGrid 
                     sx={{
@@ -85,6 +87,7 @@ const MisCitas = () => {
                     columns={columns} 
                     isRowSelectable={() => false}/>        
         </div> 
+    </>
   )
 }
 
