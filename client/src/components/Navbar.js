@@ -35,7 +35,7 @@ export default function NavBar(props: Props) {
   };
 
   const redirect = (ruta) => {
-    navigate("/"+ruta);
+    navigate("/login");
   }
 
   const drawer = (
@@ -80,7 +80,7 @@ export default function NavBar(props: Props) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}  onClick={redirect(item)}>
+              <Button key={item} sx={{ color: '#fff' }}  onClick={redirect}>
                 {item}
               </Button>
             ))}
