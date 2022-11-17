@@ -68,13 +68,15 @@ function Login() {
                         sx={{backgroundColor: 'white',
                             marginTop: '30px',
                             color: '#393E46'}}
-                        onClick={login}>Ingresar
+                        onClick={login}
+                    >
+                        Ingresar
                     </Button>
                     <a href="/register">Crear una cuenta</a>
                 </div>
             </Box>
         </div>
-  )
+  ) 
 }
 
 export default Login

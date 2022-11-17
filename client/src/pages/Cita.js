@@ -30,10 +30,6 @@ function Cita() {
         });
     }
 
-    const logout = () => {
-        localStorage.removeItem("accessToken");
-        navigate("/login");
-    };
     
     const columns = [
         {field: 'direccion', headerName: 'Direccion', width: 150},
@@ -98,6 +94,7 @@ function Cita() {
                         backgroundColor: '#D0B8A8',
                         display: 'flex',
                         margin: '0 auto',
+                        marginTop: '100px',
                         justifyContent: 'center',
                         textAlign: 'center',
                     }} 

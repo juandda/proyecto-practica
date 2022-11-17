@@ -28,6 +28,11 @@ module.exports = (sequelize,Sequelize) =>{
             type: Sequelize.STRING,
             allowNull:false,
         },
+        rol:{
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
     })
 
     return Usuarios;

@@ -77,6 +77,7 @@ const MisCitas = () => {
                             backgroundColor: '#D0B8A8',
                             display: 'flex',
                             margin: '0 auto',
+                            marginTop: '100px',
                             justifyContent: 'center',
                             textAlign: 'center',
                         }} 
