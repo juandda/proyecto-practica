@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 //sweet alert
 
 function Cita() {
 
     const [listaCitas, setListaCitas] = useState([]);
     let navigate = useNavigate();
-    const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(() =>{
         axios.get("http://localhost:3001/citas").then((response) => {
@@ -84,7 +83,7 @@ function Cita() {
     return (
         <>
         
-            <nav>
+            {/* <nav>
                 <a href="/misCitas">Mis Citas</a>
                 <Button
                         disabled={false}
@@ -92,7 +91,7 @@ function Cita() {
                         >
                             Cerrar sesion
                         </Button>
-            </nav>
+            </nav> */}
             <div style={{ height: 500, width: '55%' }} class = "dataGrid-container">
                 <DataGrid 
                      sx={{
