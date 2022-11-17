@@ -52,9 +52,10 @@ function RegistrarCita() {
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'la cita se ha registrado correctamente'
+                    title: 'la cita se ha registrado correctamente',
+                    timer: 2000
                 })
-                window.location.reload();
+                navigate("/listarCitas");
         })
     }
 
@@ -112,11 +113,21 @@ function RegistrarCita() {
                         })}
                     </Select>
                     <Button 
-                        sx={{backgroundColor: 'white',
+                        sx={{
                             marginTop: '30px',
                             color: '#393E46'}}
                         type = "submit"    
+                        variant="contained"
                         onSubmit={onSubmit}>Registrar
+                    </Button>
+                    <Button 
+                        sx={{
+                            marginTop: '30px',
+                            color: '#393E46'}}
+                            color='secondary'
+                            variant="contained"
+                        type = "submit"    
+                        onClick={()=>{navigate("/listarCitas")}}>Volver
                     </Button>
                 </Form>
             </Formik>

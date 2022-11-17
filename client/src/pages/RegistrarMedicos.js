@@ -58,7 +58,8 @@ function RegistrarMedico    () {
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'El medico se ha registrado correctamente'
+                    title: 'El medico se ha registrado correctamente',
+                    timer: 2000
                 })
                 window.location.reload();
         })

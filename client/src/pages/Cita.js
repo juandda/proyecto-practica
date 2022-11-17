@@ -4,6 +4,7 @@ import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 //sweet alert
 
 function Cita() {
@@ -25,7 +26,11 @@ function Cita() {
               accessToken: localStorage.getItem("accessToken"),
             },
           }).then((response) => {
-            alert(response.data);
+            Swal.fire({
+                icon: 'success',
+                title: response.data,
+                timer: 2000
+            })
             window.location.reload()
         });
     }
@@ -91,7 +96,7 @@ function Cita() {
             <div style={{ height: 500, width: '55%' }} class = "dataGrid-container">
                 <DataGrid 
                      sx={{
-                        backgroundColor: '#D0B8A8',
+                        backgroundColor: 'white',
                         display: 'flex',
                         margin: '0 auto',
                         marginTop: '100px',

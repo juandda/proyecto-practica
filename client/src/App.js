@@ -25,6 +25,10 @@ import { AppBar,
          Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import theme from './ThemeConfig';
+import ListarEps from './pages/ListarEps';
+import ListarEspecialidades from './pages/ListarEspecialidades';
+import ListarMedicos from './pages/ListarMedicos';
+import ListarCitas from './pages/ListarCitas';
 
 function App() {
   const [authState, setAuthState] = useState(false)
@@ -49,6 +53,22 @@ function App() {
               {
                 nombre : 'Mis Citas',
                 ruta: "/misCitas",
+              },
+              {
+                nombre : 'Eps',
+                ruta: "/listarEps",
+              },
+              {
+                nombre : 'Especialidades',
+                ruta: "/listarEspecialidades",
+              },
+              {
+                nombre : 'Medicos',
+                ruta: "/listarMedicos",
+              },
+              {
+                nombre : 'Administrar Citas',
+                ruta: "/listarCitas",
               }]
 
   const list = (anchor) => (
@@ -84,6 +104,10 @@ function App() {
                     <Route path="/registrarMedico" element={<RegistrarMedico/>}/>
                     <Route path="/registrarEps" element={<RegistrarEps/>}/>
                     <Route path="/registrarEspecialidad" element={<RegistrarEspecialidad/>}/>
+                    <Route path="/listarEps" element={<ListarEps/>}/>
+                    <Route path="/listarEspecialidades" element={<ListarEspecialidades/>}/>
+                    <Route path="/listarMedicos" element={<ListarMedicos/>}/>
+                    <Route path="/listarCitas" element={<ListarCitas/>}/>
                   </Routes>
               </AuthContext.Provider>
             </ThemeProvider>
@@ -101,6 +125,10 @@ function App() {
                 <Route path="/registrarMedico" element={<RegistrarMedico/>}/>
                 <Route path="/registrarEps" element={<RegistrarEps/>}/>
                 <Route path="/registrarEspecialidad" element={<RegistrarEspecialidad/>}/>
+                <Route path="/listarEps" element={<ListarEps/>}/>
+                <Route path="/listarEspecialidades" element={<ListarEspecialidades/>}/>
+                <Route path="/listarMedicos" element={<ListarMedicos/>}/>
+                <Route path="/listarCitas" element={<ListarCitas/>}/>
               </Routes>
               <AppBar component="nav">
                   <Toolbar
@@ -135,7 +163,7 @@ function App() {
                       <Drawer
                         anchor={anchor}
                         open={state[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
+                        onClose={toggleDrawer('left', false)}
                       >
                         {list(anchor)}
                       </Drawer>

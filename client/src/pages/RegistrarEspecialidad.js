@@ -28,7 +28,8 @@ function RegistrarEspecialidad    () {
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'la especialidad se ha registrado correctamente'
+                    title: 'la especialidad se ha registrado correctamente',
+                    timer: 2000
                 })
                 window.location.reload();
         })

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const MisCitas = () => {
 
@@ -27,7 +28,11 @@ const MisCitas = () => {
         accessToken: localStorage.getItem("accessToken"),
       }
     }).then((response) => {
-        alert(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: response.data,
+            timer: 2000
+        })
         window.location.reload()
     });
 }
@@ -71,10 +76,10 @@ const MisCitas = () => {
 
   return (
 
-        <div style={{ height: 300, width: '56%'}} className='table-container'>
+        <div style={{ height: 300, width: '65%'}} className='table-container'>
                 <DataGrid 
                     sx={{
-                            backgroundColor: '#D0B8A8',
+                            backgroundColor: 'white',
                             display: 'flex',
                             margin: '0 auto',
                             marginTop: '100px',
