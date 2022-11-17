@@ -1,28 +1,23 @@
 import React from 'react'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import '../App.css'
+import '../App.css';
 import { Button, Select, InputLabel,MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import { useNavigate }  from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+//sweet alert
 
-function Register() {
+function RegistrarMedico    () {
 
     const initialValues = {
         nombre: "",
-        correo:"",
-        fecha_nacimiento:"",
-        password:""
     };
 
     const validationSchema = Yup.object().shape({
-        nombre: Yup.string().required(),
-        correo:Yup.string().required(),
-        fecha_nacimiento:Yup.date().required(),
-        clave:Yup.string().required(),
+        nombre: Yup.string().required()
     })
 
     let navigate = useNavigate();
@@ -31,32 +26,42 @@ function Register() {
 
     const [eps, setEps] = useState('');
 
+    const [listaEspecialidades, setListaEspecialidades] = useState([]);
+
+    const [especialidad, setEspecialidad] = useState('');
+
+
+
     useEffect(() =>{
         axios.get("http://localhost:3001/eps").then((response) => {
             setListaEps(response.data);
             console.log(response.data);
         });
+
+        axios.get("http://localhost:3001/especialidades").then((response) => {
+            setListaEspecialidades(response.data);
+            console.log(response.data);
+        });
     },[]);
 
     const handleChange = (event) => {
+        setEspecialidad(event.target.value);
         setEps(event.target.value);
     }
 
     const onSubmit= (data) =>{
-        axios.post("http://localhost:3001/usuarios", 
+        axios.post("http://localhost:3001/medicos", 
             {
                 nombre:data.nombre,
-                correo:data.correo,
-                fecha_nacimiento: data.fecha_nacimiento,
-                password:data.clave,
                 epsId:eps, 
+                especialidadId:especialidad, 
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
-                    title: 'El usuario se ha registrado correctamente'
+                    title: 'El medico se ha registrado correctamente'
                 })
+                window.location.reload();
         })
-        navigate("/login")
     }
 
     return (
@@ -67,44 +72,17 @@ function Register() {
                 validationSchema={validationSchema}
             >
                 <Form className="formContainer">
-                    <PersonIcon sx={{ fontSize: 110, color: '#393E46'}}></PersonIcon>
+                    <h2> Registro de Medicos</h2>
                     <ErrorMessage name="nombre" component="span" />
                     <Field
-                        autocomplete="off"
+                        autoComplete="off"
                         id="inputCreatePost"
                         name="nombre"
                         placeholder="Nombre"
                         label = "Nombre"
                     />
 
-                    <ErrorMessage name="correo" component="span" />
-                    <Field
-                        autocomplete="off"
-                        id="inputCreatePost"
-                        name="correo"
-                        placeholder="Correo"
-                        label = "Correo"
-                    />
-
-                    <ErrorMessage name="fecha_nacimiento" component="span" />
-                    <Field
-                        autocomplete="off"
-                        type="date"
-                        id="inputCreatePost"
-                        name="fecha_nacimiento"
-                        placeholder="Fecha Nacimiento"
-                        label = "Fecha Nacimiento"
-                    />
-
-                    <ErrorMessage name="clave" component="span" />
-                    <Field
-                        autocomplete="off"
-                        type="password"
-                        id="inputCreatePost"
-                        name="clave"
-                        placeholder="Clave"
-                        label = "Clave"
-                    />
+                  
                     <InputLabel id="eps-id">Eps</InputLabel>
                     <Select
                         labelId="eps-id"
@@ -119,6 +97,22 @@ function Register() {
                             );
                         })}
                     </Select>
+
+                    <InputLabel id="especialidad-id">especialidad</InputLabel>
+                    <Select
+                        labelId="especialidad-id"
+                        id="select-especialidad"
+                        value={especialidad}
+                        onChange={handleChange}
+                        sx = {{width:200}}
+                    >
+                        {listaEspecialidades.map((especialidad) => {
+                            return(
+                                <MenuItem key={especialidad.id} value={especialidad.id}>{especialidad.nombre}</MenuItem>
+                            );
+                        })}
+                    </Select>
+
                     <Button 
                         sx={{backgroundColor: 'white',
                             marginTop: '30px',
@@ -132,4 +126,7 @@ function Register() {
     )
 }
 
-export default Register
+
+export default RegistrarMedico;
+
+
