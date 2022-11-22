@@ -4,7 +4,6 @@ const router = express.Router();
 const { Usuarios } = require ("../models")
 const bcrypt =  require('bcrypt');
 const { validateToken } = require("../middlewares/AuthMiddleware")
-
 const {  sign } = require('jsonwebtoken');
 
 
@@ -43,9 +42,9 @@ router.delete("/:usuariosId",validateToken, async (req, res) => {
 router.put("/:id",validateToken, async (req, res) => {
     try{
         const { id } = req.params;
-        const {nombre, correo, fecha_nacimiento, eps_id, rol} = req.body;
+        const {nombre, correo, fecha_nacimiento, eps_id, rol, identificacion} = req.body;
         await db.Usuarios.update(
-            {nombre, correo, fecha_nacimiento, eps_id, rol},
+            {nombre, correo, fecha_nacimiento, eps_id, rol, identificacion},
             {
                 where: {
                     id: id,
@@ -67,26 +66,26 @@ router.post("/", async(req, res)=>{
             nombre: usuario.nombre,
             correo: usuario.correo,
             fecha_nacimiento: usuario.fecha_nacimiento,
+            identificacion: usuario.identificacion,
             epsId: usuario.epsId,
             password: hash,
-            rol:usuario.rol
+            rol:usuario.rol,
         })
     })
     res.json(usuario);
 });
 
 router.post("/login", async (req, res) =>{
-    const { correo, password} = req.body
+    const { identificacion, password} = req.body
 
     try{
-        const usuario = await Usuarios.findOne({where: {correo:correo}})
-
+        const usuario = await Usuarios.findOne({where: {identificacion:identificacion}})
         if(!usuario) res.json({error: "El usuario no existe"});
 
         bcrypt.compare(password, usuario.password).then((match)=>{
             if(!match) res.json({error: "Contraseña y usuario incorrectos"})
 
-            const accessToken = sign({correo: usuario.correo, id:usuario.id, nombre:usuario.nombre, rol:usuario.rol }, "importantsecret")
+            const accessToken = sign({identificacion:usuario.identificacion, id:usuario.id, rol:usuario.rol }, "importantsecret")
             res.json({
                 accessToken: accessToken,
             });

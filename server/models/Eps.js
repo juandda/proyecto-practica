@@ -16,7 +16,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: true
         },  
-    })
+    },
+    {
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false,
+      
+      })
 
     return Eps;
 }

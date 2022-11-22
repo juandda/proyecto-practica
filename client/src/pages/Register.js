@@ -15,7 +15,8 @@ function Register() {
         nombre: "",
         correo:"",
         fecha_nacimiento:"",
-        password:""
+        password:"",
+        identificacion:""
     };
 
     const validationSchema = Yup.object().shape({
@@ -23,6 +24,7 @@ function Register() {
         correo:Yup.string().required(),
         fecha_nacimiento:Yup.date().required(),
         clave:Yup.string().required(),
+        identificacion: Yup.number().required(),
     })
 
     let navigate = useNavigate();
@@ -50,6 +52,7 @@ function Register() {
                 fecha_nacimiento: data.fecha_nacimiento,
                 password:data.clave,
                 epsId:eps, 
+                identificacion:data.identificacion,
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
@@ -86,6 +89,15 @@ function Register() {
                         name="correo"
                         placeholder="Correo"
                         label = "Correo"
+                    />
+
+                    <ErrorMessage name="identificacion" component="span" />
+                    <Field
+                        autocomplete="off"
+                        id="inputCreatePost"
+                        name="identificacion"
+                        placeholder="Cedula"
+                        label = "Identificacion"
                     />
 
                     <ErrorMessage name="fecha_nacimiento" component="span" />

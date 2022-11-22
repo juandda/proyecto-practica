@@ -30,7 +30,13 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: true
         },
-    })
+    },
+    {
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false,
+      
+      })
 
 
     return Citas;

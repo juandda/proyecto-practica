@@ -7,12 +7,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
     
-    const [correo, setCorreo] = useState("")
+    const [identificacion, setIdentificacion] = useState("")
     const [password, setPassword] = useState("")
     let navigate = useNavigate();
 
     const login = () => {
-        const data = {correo: correo, password: password}
+        const data = {identificacion: identificacion, password: password}
         axios.post("http://localhost:3001/usuarios/login", data).then((response) => {
             if(response.data.error) {
                 alert(response.data.error)
@@ -48,9 +48,9 @@ function Login() {
                         sx={{marginBottom: 2}}    
                         type="text"
                         required
-                        label = "Correo"
+                        label = "Cedula"
                         onChange={(event) => {
-                            setCorreo(event.target.value)
+                            setIdentificacion(event.target.value)
                         }}
                     />
                     <TextField 

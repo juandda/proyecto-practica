@@ -17,6 +17,10 @@ module.exports = (sequelize,Sequelize) =>{
                 isEmail: true
             }
         },
+        identificacion:{
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
         fecha_nacimiento:{
             type: Sequelize.DATEONLY,
             allowNull:true,
@@ -33,7 +37,13 @@ module.exports = (sequelize,Sequelize) =>{
             allowNull: false,
             defaultValue: false
         }
-    })
+    },
+    {
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false,
+      
+      })
 
     return Usuarios;
 }
