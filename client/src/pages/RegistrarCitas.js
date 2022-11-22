@@ -45,7 +45,6 @@ function RegistrarCita() {
     }
 
     const onSubmit= (data) =>{
-        console.log("DATA", data);
 
         axios.post("http://localhost:3001/citas", 
             {
@@ -54,6 +53,11 @@ function RegistrarCita() {
                 hora: data.hora,
                 estado:true,
                 medicoId: medico, 
+            },
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken"),
+                  },
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',

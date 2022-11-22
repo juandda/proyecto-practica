@@ -53,23 +53,30 @@ function RegistrarMedico    () {
         });
     },[]);
 
-    const handleChange = (event) => {
+    const handleChangeEspecialidad = (event) => {
         setEspecialidad(event.target.value);
+    }
+
+    const handleChangeEps = (event) => {
         setEps(event.target.value);
     }
 
+
     const onSubmit= (data) =>{
-        axios.post("http://localhost:3001/medicos", 
-            {
+        axios.post("http://localhost:3001/medicos",{
                 nombre:data.nombre,
                 epsId:eps, 
                 especialidadId:especialidad, 
+            }, 
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken"),
+                  },
             }).then((response) =>{   
                 Swal.fire({
                     icon: 'success',
                     title: 'El medico se ha registrado correctamente'
                 })
-                window.location.reload();
                 setTimeout(function(){
                     navigate("/listarMedicos");
                   }, 2000)
@@ -102,7 +109,7 @@ function RegistrarMedico    () {
                             labelId="eps-id"
                             id="select-eps"
                             value={eps}
-                            onChange={handleChange}
+                            onChange={handleChangeEps}
                             sx = {{width:200}}
                         >
                             {listaEps.map((eps) => {
@@ -117,7 +124,7 @@ function RegistrarMedico    () {
                             labelId="especialidad-id"
                             id="select-especialidad"
                             value={especialidad}
-                            onChange={handleChange}
+                            onChange={handleChangeEspecialidad}
                             sx = {{width:200}}
                         >
                             {listaEspecialidades.map((especialidad) => {
